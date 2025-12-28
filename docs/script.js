@@ -563,15 +563,32 @@ function generateTimeLabels() {
     
     // 12. Обновление даты
     function updateCurrentDate() {
+    try {
         const now = new Date();
+        console.log('Текущая дата:', now); // Для отладки
+        
         const options = { 
             weekday: 'long', 
             year: 'numeric', 
             month: 'long', 
             day: 'numeric' 
         };
-        currentDateElement.textContent = now.toLocaleDateString('ru-RU', options);
+        
+        const dateString = now.toLocaleDateString('ru-RU', options);
+        console.log('Форматированная дата:', dateString); // Для отладки
+        
+        if (currentDateElement) {
+            currentDateElement.textContent = dateString;
+        } else {
+            console.error('Элемент currentDateElement не найден');
+        }
+    } catch (error) {
+        console.error('Ошибка при обновлении даты:', error);
+        // Резервный вариант
+        const now = new Date();
+        currentDateElement.textContent = now.toLocaleDateString();
     }
+}
     
     // ==================== ОПЕРАЦИИ С ЗАДАЧАМИ ====================
     
