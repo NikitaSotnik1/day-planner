@@ -832,3 +832,263 @@ footer p {
     transform: translateY(-2px);
     box-shadow: 0 5px 10px rgba(0, 176, 155, 0.3);
 }
+
+/* ==================== МОБИЛЬНАЯ АДАПТИВНОСТЬ ==================== */
+
+@media (max-width: 768px) {
+    /* Общие отступы */
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        border-radius: 15px;
+    }
+    
+    /* Хедер */
+    header {
+        padding: 20px 15px;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    header h1 {
+        font-size: 22px;
+    }
+    
+    .date-display {
+        font-size: 16px;
+        padding: 8px 15px;
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    /* Основной контент - делаем вертикальным */
+    main {
+        flex-direction: column;
+    }
+    
+    .left-panel, .right-panel {
+        padding: 20px;
+        width: 100%;
+    }
+    
+    .left-panel {
+        border-right: none;
+        border-bottom: 2px solid #eee;
+    }
+    
+    /* Ввод задачи */
+    .input-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #taskInput {
+        padding: 14px;
+        font-size: 16px; /* Увеличиваем для удобства набора */
+    }
+    
+    #addTaskBtn {
+        padding: 14px 20px;
+        justify-content: center;
+    }
+    
+    /* Ручные контролы - в колонку */
+    .manual-controls {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Статистика */
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-value {
+        font-size: 24px;
+    }
+    
+    /* Таймлайн */
+    .timeline-container {
+        height: 300px; /* Уменьшаем высоту на мобильных */
+    }
+    
+    .time-labels {
+        width: 60px;
+        padding: 10px 5px;
+    }
+    
+    .time-label {
+        height: 40px;
+        font-size: 12px;
+    }
+    
+    .timeline {
+        padding: 10px;
+        min-height: 960px; /* 24ч * 40px */
+    }
+    
+    .task-block {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+    
+    .task-block-title {
+        font-size: 12px;
+        -webkit-line-clamp: 3; /* Больше строк для названия */
+        max-height: 3.9em;
+    }
+    
+    .task-block-time {
+        font-size: 10px;
+    }
+    
+    /* Список задач */
+    .task-filters {
+        flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .task-item {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .task-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .task-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    
+    /* Футер */
+    footer {
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    /* Фокус-режим модалка */
+    .focus-modal {
+        width: 95%;
+        margin: 10px;
+    }
+    
+    .focus-header {
+        padding: 20px;
+    }
+    
+    .focus-content {
+        padding: 20px;
+    }
+    
+    .focus-task-title {
+        font-size: 22px;
+    }
+    
+    .timer-display {
+        font-size: 56px;
+    }
+    
+    .timer-controls {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .timer-controls button {
+        padding: 12px 20px;
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    .timer-mode {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .mode-btn {
+        padding: 10px 20px;
+        flex: 1;
+        min-width: 100px;
+        text-align: center;
+    }
+    
+    /* Кнопки экспорта/импорта */
+    #exportBtn, #exportAllBtn, .import-btn, #showQRBtn {
+        width: 100%;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+}
+
+/* ==================== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ ==================== */
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .timeline-container {
+        height: 250px;
+    }
+    
+    .time-labels {
+        width: 50px;
+        font-size: 11px;
+    }
+    
+    .task-block {
+        padding: 6px 8px;
+    }
+    
+    .task-block-title {
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+    }
+    
+    /* Улучшаем тач-таргеты (область нажатия) */
+    button, .task-btn, .filter-btn, .mode-btn {
+        min-height: 44px; /* Минимальная высота для удобного нажатия */
+    }
+    
+    input, select {
+        font-size: 16px !important; /* Предотвращает zoom в iOS */
+        min-height: 44px;
+    }
+    
+    /* Убираем горизонтальную прокрутку */
+    .task-block-title, .task-name {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+}
+
+/* ==================== ИСПРАВЛЕНИЕ ДЛЯ iOS SAFARI ==================== */
+@supports (-webkit-touch-callout: none) {
+    /* iOS specific styles */
+    input, textarea, select {
+        font-size: 16px; /* Предотвращает автоматический zoom */
+    }
+    
+    .timeline-container {
+        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    }
+}
