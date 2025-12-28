@@ -563,31 +563,19 @@ function generateTimeLabels() {
     
     // 12. Обновление даты
     function updateCurrentDate() {
-    try {
-        const now = new Date();
-        console.log('Текущая дата:', now); // Для отладки
-        
-        const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        };
-        
-        const dateString = now.toLocaleDateString('ru-RU', options);
-        console.log('Форматированная дата:', dateString); // Для отладки
-        
-        if (currentDateElement) {
-            currentDateElement.textContent = dateString;
-        } else {
-            console.error('Элемент currentDateElement не найден');
-        }
-    } catch (error) {
-        console.error('Ошибка при обновлении даты:', error);
-        // Резервный вариант
-        const now = new Date();
-        currentDateElement.textContent = now.toLocaleDateString();
-    }
+    const now = new Date();
+    
+    // Русские названия месяцев и дней
+    const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
+    const months = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 
+                    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+    
+    const dayOfWeek = days[now.getDay()];
+    const day = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    
+    currentDateElement.textContent = `${dayOfWeek}, ${day} ${month} ${year} года`;
 }
     
     // ==================== ОПЕРАЦИИ С ЗАДАЧАМИ ====================
