@@ -1092,3 +1092,30 @@ footer p {
         -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
     }
 }
+
+/* Улучшение для touch-устройств */
+@media (hover: none) and (pointer: coarse) {
+    /* Увеличиваем область нажатия */
+    .task-btn, .filter-btn, .mode-btn, button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Убираем hover-эффекты на тач-устройствах */
+    .task-block:hover {
+        transform: none;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Улучшаем видимость активных состояний */
+    .task-btn:active, button:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    
+    /* Улучшаем перетаскивание на тач-устройствах */
+    .task-block {
+        touch-action: pan-y; /* Разрешаем только вертикальный скролл */
+        user-select: none; /* Предотвращаем выделение текста при таче */
+    }
+}
