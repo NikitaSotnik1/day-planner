@@ -1120,25 +1120,28 @@ footer p {
     }
 }
 /* Фикс для iOS, когда клавиатура открывается */
+
+
+/* Исправление скролла для мобильных */
 @media (max-width: 768px) {
-    body {
-        /* Убрали position: fixed */
-        width: 100%;
-        min-height: 100vh;
-        overflow-x: hidden; /* Запрещаем горизонтальный скролл */
-        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
+    html, body {
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .container {
-        min-height: 100vh;
+        min-height: auto;
+        overflow-y: visible;
     }
     
-    /* Убедимся, что всё помещается по ширине */
-    .timeline-container,
-    .task-item,
-    .add-task,
-    .stats {
-        max-width: 100%;
-        overflow-x: hidden;
+    main {
+        overflow-y: visible;
+    }
+    
+    /* Убираем фиксированные высоты, которые могут мешать скроллу */
+    .timeline-container {
+        height: auto;
+        max-height: 300px;
     }
 }
