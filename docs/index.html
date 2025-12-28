@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Умный планировщик дня</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calendar-alt"></i> Умный планировщик дня</h1>
+            <div class="date-display" id="currentDate">Загрузка даты...</div>
+        </header>
+
+        <main>
+            <div class="left-panel">
+                <section class="add-task">
+                    <h2><i class="fas fa-plus-circle"></i> Интеллектуальное добавление</h2>
+                    <div class="input-hint">Например: "Совещание в 14:30" или "Вечерняя прогулка"</div>
+                    <div class="input-container">
+                        <input type="text" id="taskInput" placeholder="Введите задачу...">
+                        <button id="addTaskBtn"><i class="fas fa-magic"></i> Добавить</button>
+                    </div>
+                    
+                    <div class="parsed-preview" id="parsedPreview">
+                        <div class="preview-title">Предпросмотр:</div>
+                        <div class="preview-content">
+                            <span class="preview-name">Название</span>
+                            <span class="preview-time">Время: --:--</span>
+                            <span class="preview-category">Категория: Общее</span>
+                        </div>
+                    </div>
+
+                    <div class="manual-controls">
+                        <div class="control-group">
+                            <label for="timeInput"><i class="far fa-clock"></i> Время</label>
+                            <input type="time" id="timeInput" value="09:00">
+                        </div>
+                        <div class="control-group">
+                            <label for="durationInput"><i class="fas fa-hourglass-half"></i> Длительность</label>
+                            <input type="number" id="durationInput" min="5" max="480" value="60" step="5">
+                        </div>
+                        <div class="control-group">
+                            <label for="categorySelect"><i class="fas fa-tag"></i> Категория</label>
+                            <select id="categorySelect">
+                                <option value="work">Работа</option>
+                                <option value="study">Учёба</option>
+                                <option value="personal" selected>Личное</option>
+                                <option value="meeting">Встречи</option>
+                                <option value="health">Здоровье</option>
+                                <option value="other">Общее</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="stats">
+                    <h2><i class="fas fa-chart-pie"></i> Статистика дня</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalTasks">0</div>
+                            <div class="stat-label">Всего задач</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalTime">0ч</div>
+                            <div class="stat-label">Запланировано</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class
+                                                        <div class="stat-value" id="completedTasks">0</div>
+                            <div class="stat-label">Выполнено</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-panel">
+                <section class="timeline-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-timeline"></i> Визуальный таймлайн дня</h2>
+                        <button id="clearDayBtn" class="clear-btn"><i class="fas fa-trash-alt"></i> Очистить день</button>
+                    </div>
+                    
+                    <div class="timeline-container">
+                        <div class="time-labels">
+                            <!-- Время будет добавлено через JS -->
+                        </div>
+                        <div class="timeline" id="timeline">
+                            <!-- Задачи будут добавлены через JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <section class="task-list">
+                    <h2><i class="fas fa-tasks"></i> Список задач</h2>
+                    <div class="task-filters">
+                        <button class="filter-btn active" data-filter="all">Все</button>
+                        <button class="filter-btn" data-filter="pending">Активные</button>
+                        <button class="filter-btn" data-filter="completed">Выполненные</button>
+                    </div>
+                    <div class="tasks" id="tasksList">
+                        <!-- Задачи будут добавлены через JS -->
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <p>Планировщик сохраняет данные в вашем браузере автоматически</p>
+            <button id="exportBtn"><i class="fas fa-file-export"></i> Экспорт дня</button>
+        </footer>
+    </div>
+
+    <!-- Модальное окно фокус-режима -->
+    <div class="modal-overlay" id="focusModal">
+        <div class="focus-modal">
+            <div class="focus-header">
+                <h2><i class="fas fa-bullseye"></i> Фокус-режим</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="focus-content">
+                <div class="focus-task-title" id="focusTaskTitle">Название задачи</div>
+                <div class="focus-task-time" id="focusTaskTime">Время: --:--</div>
+                
+                <div class="pomodoro-timer">
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-controls">
+                        <button id="startTimerBtn"><i class="fas fa-play"></i> Старт</button>
+                        <button id="pauseTimerBtn" disabled><i class="fas fa-pause"></i> Пауза</button>
+                        <button id="resetTimerBtn"><i class="fas fa-redo"></i> Сброс</button>
+                    </div>
+                    <div class="timer-mode">
+    <span class="mode-btn active" data-mode="work">Работа</span>
+    <span class="mode-btn" data-mode="break">Перерыв</span>
+    <span class="mode-btn" data-mode="custom">Настроить</span>
+</div>
+
+<div class="custom-time-settings" id="customTimeSettings" style="display: none;">
+    <div class="time-input-group">
+        <label for="workTimeInput">Время работы (мин):</label>
+        <input type="number" id="workTimeInput" min="1" max="120" value="25" class="time-input">
+    </div>
+    <div class="time-input-group">
+        <label for="breakTimeInput">Время перерыва (мин):</label>
+        <input type="number" id="breakTimeInput" min="1" max="60" value="5" class="time-input">
+    </div>
+    <button id="saveTimeSettings" class="save-btn">Сохранить настройки</button>
+</div>
+                </div>
+                
+                <div class="focus-instruction">
+                    <i class="fas fa-lightbulb"></i> Сконцентрируйтесь на этой задаче. Остальной интерфейс заблокирован.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
