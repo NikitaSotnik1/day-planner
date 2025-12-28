@@ -168,6 +168,12 @@ document.getElementById('saveTimeSettings').addEventListener('click', function()
         
         // Drag and drop для таймлайна
         initDragAndDrop();
+
+        // Слушаем изменение размера окна для пересчёта таймлайна
+window.addEventListener('resize', function() {
+    generateTimeLabels();
+    updateTimelinePositions();
+});
     }
     
     // ==================== ОСНОВНЫЕ ФУНКЦИИ ====================
@@ -301,7 +307,7 @@ document.getElementById('saveTimeSettings').addEventListener('click', function()
     }
     
     // 5. Генерация временных меток
-    function generateTimeLabels() {
+function generateTimeLabels() {
     timeLabels.innerHTML = '';
     for (let hour = 0; hour < 24; hour++) {
         const label = document.createElement('div');
@@ -309,6 +315,17 @@ document.getElementById('saveTimeSettings').addEventListener('click', function()
         label.textContent = `${hour.toString().padStart(2, '0')}:00`;
         timeLabels.appendChild(label);
     }
+    
+    // Определяем высоту часа в зависимости от экрана
+    const isMobile = window.innerWidth <= 768;
+    const hourHeight = isMobile ? 40 : 50; // 40px на мобильных, 50px на десктопе
+    
+    // Обновляем CSS переменную (если нужно)
+    document.documentElement.style.setProperty('--hour-height', `${hourHeight}px`);
+    
+    // Устанавливаем высоту таймлайна
+    timeline.style.minHeight = `${20 + (24 * hourHeight)}px`;
+}
     
     
     // Устанавливаем высоту таймлайна на 24 часа
